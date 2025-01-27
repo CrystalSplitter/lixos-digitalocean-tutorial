@@ -2,6 +2,11 @@
 { pkgs, ... }:
 
 {
+
+  imports = [
+    ./networking.nix
+  ];
+
   # Enable flakes.
   nix.settings.experimental-features = [
     "nix-command"
