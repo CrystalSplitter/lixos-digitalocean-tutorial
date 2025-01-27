@@ -15,5 +15,19 @@
     let
       system = "x86_64-linux";
     in
-    { };
+    {
+      packages.${system} = {
+        digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
+          inherit system;
+          format = "do"; # DigitalOcean
+          modules = [
+            {
+              # Pin nixpkgs to the flake input.
+              nix.registry.nixpkgs.flake = nixpkgs;
+            }
+            ./configuration.nix
+          ];
+        };
+      };
+    };
 }
