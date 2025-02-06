@@ -14,20 +14,21 @@
     { self, nixpkgs, ... }@flakeInputs:
     let
       system = "x86_64-linux";
+      modules = [
+        {
+          # Pin nixpkgs to the flake input.
+          nix.registry.nixpkgs.flake = nixpkgs;
+          virtualisation.diskSize = 8 * 1024; # 8GiB
+        }
+        ./configuration.nix
+      ];
     in
     {
       packages.${system} = {
         digitalOceanVM = flakeInputs.nixos-generator.nixosGenerate {
           inherit system;
+          inherit modules;
           format = "do"; # DigitalOcean
-          modules = [
-            {
-              # Pin nixpkgs to the flake input.
-              nix.registry.nixpkgs.flake = nixpkgs;
-              virtualisation.diskSize = 8 * 1024; # 8GiB
-            }
-            ./configuration.nix
-          ];
         };
       };
     };
