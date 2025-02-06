@@ -9,6 +9,7 @@
       url = "github:nix-community/nixos-generators/d002ce9b6e7eb467cd1c6bb9aef9c35d191b5453";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
   outputs =
     { self, nixpkgs, ... }@flakeInputs:
@@ -31,5 +32,28 @@
           format = "do"; # DigitalOcean
         };
       };
+
+      nixosConfigurations.myDigitalOceanDroplet = nixpkgs.lib.nixosSystem {
+        inherit system;
+        inherit modules;
+      };
+
+      deploy.nodes = {
+        myDigitalOceanDroplet = {
+          # Don't forget to set your hostname appropriately!
+          hostname = "dodroplet";
+          sshUser = "lixy";
+          profiles.system = {
+            user = "root";
+            path =
+              flakeInputs.deploy-rs.lib.${system}.activate.nixos
+                self.nixosConfigurations.myDigitalOceanDroplet;
+          };
+        };
+      };
+
+      checks = builtins.mapAttrs (
+        system: deployLib: deployLib.deployChecks self.deploy
+      ) flakeInputs.deploy-rs.lib;
     };
 }
