@@ -42,7 +42,7 @@
         myDigitalOceanDroplet = {
           # Don't forget to set your hostname appropriately!
           hostname = "dodroplet";
-          sshUser = "root";
+          sshUser = "lixy";
           profiles.system = {
             user = "root";
             path =
