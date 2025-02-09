@@ -20,6 +20,9 @@
       "nix-command"
       "flakes"
     ];
+    trusted-public-keys = [
+      "cache.crystalwobsite.gay-1:tARhYz8y0cmy/r0kY99bJnpsTLfxg8pvnN93IjuSij4="
+    ];
   };
 
   # Set your default locale, as you wish.
