@@ -1,23 +1,29 @@
 # ./configuration.nix
-{ lib, modulesPath, pkgs, ... }:
+{
+  lib,
+  modulesPath,
+  pkgs,
+  ...
+}:
 
 {
 
-  imports = [
-    ./networking.nix
-  ]
-  # Required for Digital Ocean droplets.
-  ++ lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix ++ [
-    (modulesPath + "/virtualisation/digital-ocean-config.nix")
-  ];
+  imports =
+    [
+      ./networking.nix
+    ]
+    # Required for Digital Ocean droplets.
+    ++ lib.optional (builtins.pathExists ./do-userdata.nix) ./do-userdata.nix
+    ++ [
+      (modulesPath + "/virtualisation/digital-ocean-config.nix")
+    ];
 
   nix.settings = {
     # NOTE: Enable this if you want to allow deploying
     # via sudoers!
-    # trusted-users = [
-    #   "@wheel" # Allow sudoers to push Nix closures.
-    # ];
-
+    trusted-users = [
+      "@wheel" # Allow sudoers to push Nix closures.
+    ];
     # Enable flakes.
     experimental-features = [
       "nix-command"
