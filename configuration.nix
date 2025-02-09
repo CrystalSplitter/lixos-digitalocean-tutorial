@@ -42,15 +42,6 @@
     };
   };
 
-  users.users.root = {
-    openssh = {
-      # NOTE: Change this to whatever public key you use!
-      authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmzFzWOf+ddSaL0haZVVUn5tKjE+XsMEDGn/J4Etkuj"
-      ];
-    };
-  };
-
   # Passwordless sudo.
   # WARNING!
   # If you decide to change this, remember you NEED to set a password
