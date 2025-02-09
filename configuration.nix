@@ -12,9 +12,12 @@
   ];
 
   nix.settings = {
-    trusted-users = [
-      "@wheel" # Allow sudoers to push Nix closures.
-    ];
+    # NOTE: Enable this if you want to allow deploying
+    # via sudoers!
+    # trusted-users = [
+    #   "@wheel" # Allow sudoers to push Nix closures.
+    # ];
+
     # Enable flakes.
     experimental-features = [
       "nix-command"
