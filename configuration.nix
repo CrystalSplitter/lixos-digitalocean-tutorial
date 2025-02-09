@@ -11,11 +11,16 @@
     (modulesPath + "/virtualisation/digital-ocean-config.nix")
   ];
 
-  # Enable flakes.
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    trusted-users = [
+      "@wheel" # Allow sudoers to push Nix closures.
+    ];
+    # Enable flakes.
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+  };
 
   # Set your default locale, as you wish.
   i18n.defaultLocale = "C.UTF-8";
